@@ -1,4 +1,4 @@
-# ATOM Alloy Prediction
+# ATOM for Alloy Prediction
 
 ATOM is a trajectory-based alloy property prediction model. It predicts:
 
