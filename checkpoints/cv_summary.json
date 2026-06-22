@@ -1,0 +1,58 @@
+{
+  "oof_metrics": {
+    "Strength_MPa": {
+      "RMSE": 209.97574264662097,
+      "MAE": 140.9652862548828,
+      "R2": 0.8527870817816072
+    },
+    "Plasticity_%": {
+      "RMSE": 10.640143160896615,
+      "MAE": 7.20607852935791,
+      "R2": 0.6173168586878945
+    }
+  },
+  "folds": [
+    {
+      "fold": 1,
+      "n_train": 461,
+      "n_val": 116,
+      "best_epoch": 0,
+      "best_self_consistent_val_loss": 0.9511956572532654,
+      "checkpoint": "checkpoints/model_fold1_best.pth"
+    },
+    {
+      "fold": 2,
+      "n_train": 461,
+      "n_val": 116,
+      "best_epoch": 0,
+      "best_self_consistent_val_loss": 1.0895576477050781,
+      "checkpoint": "checkpoints/model_fold2_best.pth"
+    },
+    {
+      "fold": 3,
+      "n_train": 462,
+      "n_val": 115,
+      "best_epoch": 0,
+      "best_self_consistent_val_loss": 1.0017699003219604,
+      "checkpoint": "checkpoints/model_fold3_best.pth"
+    },
+    {
+      "fold": 4,
+      "n_train": 462,
+      "n_val": 115,
+      "best_epoch": 14,
+      "best_self_consistent_val_loss": 1.7743297815322876,
+      "checkpoint": "checkpoints/model_fold4_best.pth"
+    },
+    {
+      "fold": 5,
+      "n_train": 462,
+      "n_val": 115,
+      "best_epoch": 0,
+      "best_self_consistent_val_loss": 1.1021044254302979,
+      "checkpoint": "checkpoints/model_fold5_best.pth"
+    }
+  ],
+  "best_fold_checkpoint": "checkpoints/model_fold1_best.pth",
+  "best_fold_loss": 0.9511956572532654
+}

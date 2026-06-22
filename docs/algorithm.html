@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ATOM Algorithm Guide</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5d6975;
+      --line: #d9e0e7;
+      --panel: #f7f9fb;
+      --panel-strong: #edf3f6;
+      --accent: #1b3a4b;
+      --accent-2: #c44e52;
+      --accent-3: #4c72b0;
+      --code: #0f2430;
+      --bg: #ffffff;
+      --shadow: 0 18px 45px rgba(23, 33, 43, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #f7fafc 0, #ffffff 340px),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    header {
+      border-bottom: 1px solid rgba(217, 224, 231, 0.8);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .bar {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent-2);
+      box-shadow: 16px 0 0 var(--accent-3), 8px 13px 0 var(--accent);
+    }
+
+    .toggle {
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .toggle:hover {
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(27, 58, 75, 0.12);
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 34px 24px 72px;
+    }
+
+    h1 {
+      font-size: 42px;
+      line-height: 1.15;
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 40px 0 12px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--accent);
+    }
+
+    h3 {
+      font-size: 17px;
+      margin: 24px 0 8px;
+    }
+
+    p { margin: 8px 0 12px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 5px 0; }
+
+    code {
+      font-family: Menlo, Consolas, monospace;
+      background: #eef3f6;
+      color: var(--code);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      overflow-x: auto;
+      background: #0f2430;
+      color: #e7eef3;
+      padding: 16px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: var(--panel);
+      color: var(--accent);
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fbfcfd;
+    }
+
+    .lead {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 900px;
+    }
+
+    .hero {
+      position: relative;
+      margin: 6px 0 22px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 96% 8%, rgba(196, 78, 82, 0.12), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #f3f7fa 100%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 24px;
+      bottom: 20px;
+      width: 150px;
+      height: 82px;
+      border: 1px solid rgba(27, 58, 75, 0.16);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(27,58,75,0.10) 1px, transparent 1px),
+        linear-gradient(rgba(27,58,75,0.10) 1px, transparent 1px);
+      background-size: 18px 18px;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent-2);
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 10px 28px rgba(23, 33, 43, 0.05);
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: var(--accent);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #ffffff;
+      font-size: 14px;
+    }
+
+    .toc a:hover {
+      border-color: var(--accent);
+      background: var(--panel);
+    }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 14px;
+      margin: 14px 0;
+      color: var(--ink);
+    }
+
+    .warn {
+      border-left-color: var(--accent-2);
+    }
+
+    .lang-zh { display: none; }
+    body.zh .lang-en { display: none; }
+    body.zh .lang-zh { display: block; }
+    body.zh span.lang-zh { display: inline; }
+    body.zh li.lang-zh { display: list-item; }
+    body.zh tr.lang-zh { display: table-row; }
+
+    @media (max-width: 760px) {
+      .bar { padding: 12px 16px; }
+      main { padding: 24px 16px 56px; }
+      h1 { font-size: 27px; }
+      .grid { grid-template-columns: 1fr; }
+      .toc { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="brand">ATOM Alloy Discovery</div>
+      <button class="toggle" id="langToggle" type="button">中文</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero lang-en">
+      <p class="eyebrow">Alloy trajectory optimization</p>
+      <h1>ATOM Algorithm Guide</h1>
+      <p class="lead">
+        This document explains the current Alloy Trajectory Optimization Network
+        implementation, including the data interface, model architecture, residual
+        adapter, five-fold cross-validation workflow, inference workflow, and how
+        to replace the project data with your own alloy table.
+      </p>
+    </section>
+
+    <section class="hero lang-zh">
+      <p class="eyebrow">合金轨迹优化</p>
+      <h1>ATOM 算法使用文档</h1>
+      <p class="lead">
+        本文档说明当前 Alloy Trajectory Optimization Network 的实现，包括数据接口、
+        模型结构、残差适配分支、五折交叉验证训练流程、推理流程，以及如何替换成自己的合金数据。
+      </p>
+    </section>
+
+    <nav class="toc lang-en" aria-label="Table of contents">
+      <a href="#layout">Repository Layout</a>
+      <a href="#data">Data Interface</a>
+      <a href="#algorithm">Algorithm Overview</a>
+      <a href="#training">Training Workflow</a>
+      <a href="#inference">Inference Workflow</a>
+      <a href="#custom-data">Replacing Data</a>
+      <a href="#search-space">Search Space</a>
+      <a href="#figures">Figures</a>
+      <a href="#issues">Common Issues</a>
+    </nav>
+
+    <nav class="toc lang-zh" aria-label="目录">
+      <a href="#layout">文件结构</a>
+      <a href="#data">数据接口</a>
+      <a href="#algorithm">算法概览</a>
+      <a href="#training">训练流程</a>
+      <a href="#inference">推理流程</a>
+      <a href="#custom-data">替换数据</a>
+      <a href="#search-space">搜索空间</a>
+      <a href="#figures">绘图</a>
+      <a href="#issues">常见问题</a>
+    </nav>
+
+    <section id="layout">
+      <div class="grid">
+        <div class="card">
+          <h3 class="lang-en">Quick Start</h3>
+          <h3 class="lang-zh">快速开始</h3>
+          <pre><code>python trainer.py
+python inference.py data.xlsx predictions.xlsx --checkpoint checkpoints/model_best.pth</code></pre>
+        </div>
+        <div class="card">
+          <h3 class="lang-en">Main Output</h3>
+          <h3 class="lang-zh">主要输出</h3>
+          <ul>
+            <li><code>checkpoints/model_best.pth</code></li>
+            <li><code>checkpoints/cv_oof_predictions.xlsx</code></li>
+            <li><code>checkpoints/cv_summary.json</code></li>
+            <li><code>predictions.xlsx</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="data">
+      <h2 class="lang-en">1. Repository Layout</h2>
+      <h2 class="lang-zh">1. 文件结构</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Path</th>
+            <th class="lang-en">Purpose</th>
+            <th class="lang-zh">用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>data.xlsx</code></td>
+            <td class="lang-en">Main supervised alloy dataset used by training.</td>
+            <td class="lang-zh">训练使用的主监督数据表。</td>
+          </tr>
+          <tr>
+            <td><code>src/data.py</code></td>
+            <td class="lang-en">Column definitions, dataset validation, trajectory state construction, feature normalization.</td>
+            <td class="lang-zh">列定义、数据校验、轨迹状态构建、特征标准化。</td>
+          </tr>
+          <tr>
+            <td><code>src/model.py</code></td>
+            <td class="lang-en">ATON neural architecture: composition, processing, state, and test-condition branches.</td>
+            <td class="lang-zh">ATON 神经网络主结构：成分、工艺、状态、测试条件分支。</td>
+          </tr>
+          <tr>
+            <td><code>src/ensemble.py</code></td>
+            <td class="lang-en">Residual adapter on top of ATON. It learns ATON residuals instead of replacing ATON.</td>
+            <td class="lang-zh">ATON 输出端残差适配器。它学习 ATON 误差，不替代 ATON 主框架。</td>
+          </tr>
+          <tr>
+            <td><code>src/train.py</code></td>
+            <td class="lang-en">Training utilities, self-consistent prediction, metrics, checkpoint payloads.</td>
+            <td class="lang-zh">训练工具、自洽预测、指标计算、checkpoint 内容生成。</td>
+          </tr>
+          <tr>
+            <td><code>trainer.py</code></td>
+            <td class="lang-en">End-to-end five-fold cross-validation training entry point.</td>
+            <td class="lang-zh">端到端五折交叉验证训练入口。</td>
+          </tr>
+          <tr>
+            <td><code>inference.py</code></td>
+            <td class="lang-en">Label-free self-consistent inference entry point.</td>
+            <td class="lang-zh">无标签自洽推理入口。</td>
+          </tr>
+          <tr>
+            <td><code>build_search_space.py</code></td>
+            <td class="lang-en">Generates virtual candidate alloys by scanning cold rolling and annealing variables.</td>
+            <td class="lang-zh">通过扫描冷轧和退火变量生成虚拟候选合金空间。</td>
+          </tr>
+          <tr>
+            <td><code>docs/figs/plot.ipynb</code></td>
+            <td class="lang-en">Generates comparison figures from five-fold out-of-fold predictions.</td>
+            <td class="lang-zh">基于五折 OOF 预测结果生成模型对比图。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="algorithm">
+      <h2 class="lang-en">2. Data Interface</h2>
+      <h2 class="lang-zh">2. 数据接口</h2>
+      <p class="lang-en">
+        The current dataset is an Excel table with one row per experiment or candidate alloy.
+        Training requires both features and labels. Inference can accept the same feature columns
+        without labels; if labels are present, they are dropped to avoid leakage.
+      </p>
+      <p class="lang-zh">
+        当前数据是 Excel 表格，每一行代表一个实验或候选合金。训练需要特征和标签。
+        推理只需要特征列；如果输入文件包含标签列，程序会自动删除标签列，避免信息泄漏。
+      </p>
+
+      <h3 class="lang-en">Required Columns</h3>
+      <h3 class="lang-zh">必需列</h3>
+      <table>
+        <thead>
+          <tr>
+            <th class="lang-en">Group</th>
+            <th class="lang-zh">分组</th>
+            <th>Columns</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="lang-en">Composition</td>
+            <td class="lang-zh">成分</td>
+            <td><code>Al, Co, Cr, Fe, Ni, Ti, Mo, Nb</code></td>
+          </tr>
+          <tr>
+            <td class="lang-en">Categorical / encoded process</td>
+            <td class="lang-zh">类别或编码工艺</td>
+            <td><code>Eutectic, Preparation, Processing, Tensile/compress</code></td>
+          </tr>
+          <tr>
+            <td class="lang-en">Continuous process</td>
+            <td class="lang-zh">连续工艺参数</td>
+            <td><code>Cold CR_%, Annealing_Temp_K, Annealing_time_h, Aging_Temp_K, Aging_Time_h</code></td>
+          </tr>
+          <tr>
+            <td class="lang-en">Test condition</td>
+            <td class="lang-zh">测试条件</td>
+            <td><code>Rate_S-1, Tes_Temp_K</code></td>
+          </tr>
+          <tr>
+            <td class="lang-en">Targets for training only</td>
+            <td class="lang-zh">仅训练需要的标签</td>
+            <td><code>Strength_MPa, Plasticity_%</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <p class="lang-en">
+          Composition values are normalized internally by row sum. Categorical columns must already be
+          integer encoded from <code>0</code> to the maximum category id.
+        </p>
+        <p class="lang-zh">
+          成分列会在程序内部按行归一化。类别列需要提前编码成从 <code>0</code> 开始的整数。
+        </p>
+      </div>
+    </section>
+
+    <section id="training">
+      <h2 class="lang-en">3. Algorithm Overview</h2>
+      <h2 class="lang-zh">3. 算法概览</h2>
+      <p class="lang-en">
+        The model is ATON with a residual output adapter. The neural ATON backbone remains the main
+        algorithm. The adapter is attached at the output level and learns the residual error left by ATON.
+      </p>
+      <p class="lang-zh">
+        当前模型是带输出残差适配器的 ATON。神经网络 ATON 主干仍是核心算法；
+        残差适配器接在输出端，用来学习 ATON 未解释的误差。
+      </p>
+
+      <h3 class="lang-en">ATON Backbone</h3>
+      <h3 class="lang-zh">ATON 主干</h3>
+      <ul>
+        <li class="lang-en"><strong>Composition branch:</strong> encodes 8 normalized alloy composition features.</li>
+        <li class="lang-zh"><strong>成分分支：</strong>编码 8 个归一化合金成分特征。</li>
+        <li class="lang-en"><strong>Processing branch:</strong> embeds categorical processing variables and encodes continuous processing variables.</li>
+        <li class="lang-zh"><strong>工艺分支：</strong>类别工艺变量做 embedding，连续工艺变量进入 MLP。</li>
+        <li class="lang-en"><strong>Trajectory state branch:</strong> encodes one scalar <code>t</code>.</li>
+        <li class="lang-zh"><strong>轨迹状态分支：</strong>只编码一个标量 <code>t</code>。</li>
+        <li class="lang-en"><strong>Test branch:</strong> encodes strain rate and test temperature.</li>
+        <li class="lang-zh"><strong>测试条件分支：</strong>编码应变速率和测试温度。</li>
+        <li class="lang-en"><strong>Fusion:</strong> processing and state information gate the composition representation; all encoded branches are then fused for two-task prediction.</li>
+        <li class="lang-zh"><strong>融合：</strong>工艺和状态信息调制成分表征，随后多分支特征融合并预测两个目标。</li>
+      </ul>
+
+      <h3 class="lang-en">Trajectory State Encoding</h3>
+      <h3 class="lang-zh">轨迹状态编码</h3>
+      <p class="lang-en">
+        The trajectory state is a single scalar <code>t</code>. During supervised training, rows with
+        the same composition are sorted by <code>sigma_i * epsilon_i</code>, i.e.
+        <code>Strength_MPa * Plasticity_%</code>. The resulting rank is used as <code>t</code>.
+        Different compositions are ranked independently.
+      </p>
+      <p class="lang-zh">
+        轨迹状态只有一个标量 <code>t</code>。监督训练时，同一成分内部按
+        <code>sigma_i * epsilon_i</code>，也就是 <code>Strength_MPa * Plasticity_%</code> 排序，
+        排名作为 <code>t</code>。不同成分组合之间互不干扰，分别排序。
+      </p>
+      <p class="lang-en">
+        During validation and inference, labels are not used. The model starts from an initial
+        row-order ranking, predicts strength and plasticity, recomputes
+        <code>predicted_strength * predicted_plasticity</code>, updates <code>t</code>, and repeats
+        until convergence or the maximum iteration count is reached.
+      </p>
+      <p class="lang-zh">
+        验证和推理阶段不能使用标签。模型先按初始行顺序构建 <code>t</code>，预测强度和塑性，
+        再用 <code>预测强度 * 预测塑性</code> 重新排序并更新 <code>t</code>，不断迭代直到收敛或达到最大迭代次数。
+      </p>
+
+      <h3 class="lang-en">Residual Adapter</h3>
+      <h3 class="lang-zh">残差适配器</h3>
+      <p class="lang-en">
+        After ATON is trained, a residual adapter is fitted on the training fold. It does not replace
+        ATON. Its target is:
+      </p>
+      <p class="lang-zh">
+        ATON 训练完成后，在训练折上拟合残差适配器。它不会替代 ATON。它的学习目标是：
+      </p>
+      <pre><code>residual_target = y_true - alpha * y_ATOM
+ATOM_prediction = alpha * y_ATOM + residual_adapter(features)</code></pre>
+      <p class="lang-en">
+        This gives the final model better small-data tabular performance while preserving the ATON
+        architecture as the main prediction framework.
+      </p>
+      <p class="lang-zh">
+        这样既保留 ATON 作为主预测框架，又能提升小样本表格数据上的泛化性能。
+      </p>
+    </section>
+
+    <section id="inference">
+      <h2 class="lang-en">4. Training Workflow</h2>
+      <h2 class="lang-zh">4. 训练流程</h2>
+      <p class="lang-en">Run the full training workflow from the project root:</p>
+      <p class="lang-zh">在项目根目录运行完整训练流程：</p>
+      <pre><code>python trainer.py</code></pre>
+
+      <h3 class="lang-en">What Happens Internally</h3>
+      <h3 class="lang-zh">内部执行步骤</h3>
+      <ol>
+        <li class="lang-en">Load <code>data.xlsx</code> and validate all required columns.</li>
+        <li class="lang-zh">读取 <code>data.xlsx</code> 并检查必需列。</li>
+        <li class="lang-en">Split the data with <code>KFold(n_splits=5, shuffle=True, random_state=42)</code>.</li>
+        <li class="lang-zh">使用 <code>KFold(n_splits=5, shuffle=True, random_state=42)</code> 进行五折划分。</li>
+        <li class="lang-en">For each fold, build training trajectory states from labels only inside the training fold.</li>
+        <li class="lang-zh">每折只在训练折内部使用标签构建轨迹状态。</li>
+        <li class="lang-en">Train ATON and select the best epoch using label-free self-consistent validation loss.</li>
+        <li class="lang-zh">训练 ATON，并用无标签自洽验证损失选择最佳 epoch。</li>
+        <li class="lang-en">Fit the residual adapter on the training fold residuals.</li>
+        <li class="lang-zh">在训练折残差上拟合残差适配器。</li>
+        <li class="lang-en">Predict the held-out fold with self-consistent inference.</li>
+        <li class="lang-zh">对 held-out 折做自洽预测。</li>
+        <li class="lang-en">Concatenate all five held-out predictions and calculate final metrics once on the full OOF vector.</li>
+        <li class="lang-zh">拼接五折 held-out 预测，最后只在完整 OOF 预测上统一计算一次指标。</li>
+      </ol>
+
+      <h3 class="lang-en">Useful Arguments</h3>
+      <h3 class="lang-zh">常用参数</h3>
+      <pre><code>python trainer.py \
+  --data data.xlsx \
+  --output-dir checkpoints \
+  --epochs 300 \
+  --batch-size 32 \
+  --lr 1e-3 \
+  --patience 50 \
+  --sc-max-iters 30 \
+  --sc-tol 1e-3</code></pre>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Argument</th>
+            <th class="lang-en">Meaning</th>
+            <th class="lang-zh">含义</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--data</code></td>
+            <td class="lang-en">Excel or CSV data path.</td>
+            <td class="lang-zh">Excel 或 CSV 数据路径。</td>
+          </tr>
+          <tr>
+            <td><code>--output-dir</code></td>
+            <td class="lang-en">Directory for checkpoints, OOF predictions, and summary JSON.</td>
+            <td class="lang-zh">保存 checkpoint、OOF 预测和 JSON 汇总的目录。</td>
+          </tr>
+          <tr>
+            <td><code>--epochs</code></td>
+            <td class="lang-en">Maximum training epochs per fold.</td>
+            <td class="lang-zh">每折最大训练轮数。</td>
+          </tr>
+          <tr>
+            <td><code>--patience</code></td>
+            <td class="lang-en">Early stopping patience.</td>
+            <td class="lang-zh">早停耐心轮数。</td>
+          </tr>
+          <tr>
+            <td><code>--sc-max-iters</code></td>
+            <td class="lang-en">Maximum self-consistent trajectory iterations.</td>
+            <td class="lang-zh">自洽轨迹迭代最大次数。</td>
+          </tr>
+          <tr>
+            <td><code>--sc-tol</code></td>
+            <td class="lang-en">Convergence tolerance for self-consistent prediction.</td>
+            <td class="lang-zh">自洽预测收敛阈值。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="custom-data">
+      <h2 class="lang-en">5. Inference Workflow</h2>
+      <h2 class="lang-zh">5. 推理流程</h2>
+      <p class="lang-en">
+        Inference is label-free. If the input file contains <code>Strength_MPa</code> or
+        <code>Plasticity_%</code>, the script removes them before trajectory construction.
+      </p>
+      <p class="lang-zh">
+        推理过程无标签。如果输入文件包含 <code>Strength_MPa</code> 或 <code>Plasticity_%</code>，
+        脚本会先删除这些列，再构建轨迹状态。
+      </p>
+      <pre><code>python inference.py candidates.xlsx predictions.xlsx \
+  --checkpoint checkpoints/model_best.pth \
+  --max-iters 30 \
+  --sc-tol 1e-3</code></pre>
+
+      <h3 class="lang-en">Prediction Columns</h3>
+      <h3 class="lang-zh">预测输出列</h3>
+      <p class="lang-en">
+        Residual correction is an internal part of the ATOM model. The user-facing prediction file
+        exposes only one final prediction per target.
+      </p>
+      <p class="lang-zh">
+        残差校正是 ATOM 模型内部机制。面向用户的预测文件中，每个目标只输出一个最终预测结果。
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Column</th>
+            <th class="lang-en">Meaning</th>
+            <th class="lang-zh">含义</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ATOM_Predicted_Strength_MPa</code>, <code>ATOM_Predicted_Plasticity_%</code></td>
+            <td class="lang-en">Final ATOM prediction after self-consistent trajectory inference and internal residual correction.</td>
+            <td class="lang-zh">经过自洽轨迹推理和内部残差校正后的最终 ATOM 预测结果。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="search-space">
+      <h2 class="lang-en">6. Replacing the Dataset</h2>
+      <h2 class="lang-zh">6. 替换成自己的数据</h2>
+      <ol>
+        <li class="lang-en">Prepare an Excel or CSV file with the required columns listed in Section 2.</li>
+        <li class="lang-zh">准备一个 Excel 或 CSV 文件，包含第 2 节列出的所有必需列。</li>
+        <li class="lang-en">Keep target columns only for training data. Candidate files for inference can omit them.</li>
+        <li class="lang-zh">训练数据保留标签列；推理候选数据可以不包含标签列。</li>
+        <li class="lang-en">Encode categorical columns as integers. Example: <code>Preparation = 0, 1, 2, ...</code>.</li>
+        <li class="lang-zh">将类别列编码为整数。例如 <code>Preparation = 0, 1, 2, ...</code>。</li>
+        <li class="lang-en">Run <code>python trainer.py --data your_data.xlsx</code>.</li>
+        <li class="lang-zh">运行 <code>python trainer.py --data your_data.xlsx</code>。</li>
+        <li class="lang-en">Use the generated <code>checkpoints/model_best.pth</code> for inference.</li>
+        <li class="lang-zh">使用生成的 <code>checkpoints/model_best.pth</code> 做推理。</li>
+      </ol>
+
+      <div class="note warn">
+        <p class="lang-en">
+          If your new dataset has different element columns or different process columns, edit the
+          column lists in <code>src/data.py</code> first. The rest of the pipeline reads those constants.
+        </p>
+        <p class="lang-zh">
+          如果你的新数据元素列或工艺列不同，先修改 <code>src/data.py</code> 中的列名常量。
+          训练、推理和搜索空间生成都会读取这些常量。
+        </p>
+      </div>
+    </section>
+
+    <section id="figures">
+      <h2 class="lang-en">7. Search Space Generation</h2>
+      <h2 class="lang-zh">7. 搜索空间生成</h2>
+      <p class="lang-en">
+        <code>build_search_space.py</code> creates virtual candidates by copying one reference row and
+        scanning <code>Cold CR_%</code>, <code>Annealing_Temp_K</code>, and
+        <code>Annealing_time_h</code>. The strain rate is fixed to <code>1e-3</code>.
+      </p>
+      <p class="lang-zh">
+        <code>build_search_space.py</code> 会复制一个参考样本，并扫描
+        <code>Cold CR_%</code>、<code>Annealing_Temp_K</code> 和 <code>Annealing_time_h</code>。
+        应变速率固定为 <code>1e-3</code>。
+      </p>
+      <pre><code>python build_search_space.py --data data.xlsx --output search_space.csv
+python inference.py search_space.csv search_predictions.xlsx --checkpoint checkpoints/model_best.pth</code></pre>
+    </section>
+
+    <section id="issues">
+      <h2 class="lang-en">8. Figure Generation</h2>
+      <h2 class="lang-zh">8. 绘图流程</h2>
+      <p class="lang-en">
+        The notebook <code>docs/figs/plot.ipynb</code> compares ATON with RF, GBDT, SVR, Ridge,
+        Lasso, ElasticNet, and KNN. All models use the same five-fold OOF protocol, and metrics are
+        calculated once after concatenating all held-out predictions.
+      </p>
+      <p class="lang-zh">
+        <code>docs/figs/plot.ipynb</code> 用同一套五折 OOF 流程比较 ATON 与 RF、GBDT、SVR、
+        Ridge、Lasso、ElasticNet、KNN。所有 held-out 预测拼接后统一计算指标。
+      </p>
+      <pre><code>python trainer.py
+# then open and run docs/figs/plot.ipynb</code></pre>
+    </section>
+
+    <section>
+      <h2 class="lang-en">9. Common Issues</h2>
+      <h2 class="lang-zh">9. 常见问题</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="lang-en">Problem</th>
+            <th class="lang-zh">问题</th>
+            <th class="lang-en">Fix</th>
+            <th class="lang-zh">解决方法</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="lang-en">Missing required columns</td>
+            <td class="lang-zh">缺少必需列</td>
+            <td class="lang-en">Check your table against Section 2 or update <code>src/data.py</code>.</td>
+            <td class="lang-zh">按第 2 节检查表格，或修改 <code>src/data.py</code>。</td>
+          </tr>
+          <tr>
+            <td class="lang-en">Category embedding index error</td>
+            <td class="lang-zh">类别 embedding 索引错误</td>
+            <td class="lang-en">Ensure categorical columns are non-negative integer ids and training data covers the ids used at inference.</td>
+            <td class="lang-zh">确保类别列是非负整数，并且推理中的类别编号训练集出现过。</td>
+          </tr>
+          <tr>
+            <td class="lang-en">Inference seems to use labels</td>
+            <td class="lang-zh">怀疑推理使用了标签</td>
+            <td class="lang-en">It does not. <code>inference.py</code> explicitly drops target columns if present.</td>
+            <td class="lang-zh">不会。<code>inference.py</code> 会显式删除目标列。</td>
+          </tr>
+          <tr>
+            <td class="lang-en">Notebook cannot find OOF predictions</td>
+            <td class="lang-zh">Notebook 找不到 OOF 预测</td>
+            <td class="lang-en">Run <code>python trainer.py</code> first, then rerun the notebook.</td>
+            <td class="lang-zh">先运行 <code>python trainer.py</code>，再运行 notebook。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const button = document.getElementById("langToggle");
+    button.addEventListener("click", () => {
+      document.body.classList.toggle("zh");
+      button.textContent = document.body.classList.contains("zh") ? "English" : "中文";
+      document.documentElement.lang = document.body.classList.contains("zh") ? "zh-CN" : "en";
+    });
+  </script>
+</body>
+</html>
