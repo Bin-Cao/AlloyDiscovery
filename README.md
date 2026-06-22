@@ -1,6 +1,6 @@
 # ATOM for Alloy Prediction
 
-ATOM is a trajectory-based alloy property prediction model. It predicts:
+Alloy Trajectory Optimization Model (ATOM) is a trajectory-based alloy property prediction model. It predicts:
 
 - `Strength_MPa`
 - `Plasticity_%`
