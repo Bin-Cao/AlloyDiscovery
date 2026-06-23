@@ -1,4 +1,4 @@
-# [ATOM](https://bin-cao.github.io/AlloyDiscovery/) for Alloy Prediction
+# [ATON](https://bin-cao.github.io/AlloyDiscovery/) for Alloy Prediction
 
 Alloy Trajectory Optimization Network/Model (ATON/ATOM) is a trajectory-based alloy property prediction model. It predicts:
 
