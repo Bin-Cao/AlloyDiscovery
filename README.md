@@ -1,6 +1,6 @@
 # [ATOM](https://bin-cao.github.io/AlloyDiscovery/) for Alloy Prediction
 
-Alloy Trajectory Optimization Model (ATOM) is a trajectory-based alloy property prediction model. It predicts:
+Alloy Trajectory Optimization Network/Model (ATON/ATOM) is a trajectory-based alloy property prediction model. It predicts:
 
 - `Strength_MPa`
 - `Plasticity_%`
