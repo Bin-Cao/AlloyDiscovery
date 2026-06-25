@@ -1,6 +1,6 @@
 <div align="center">
 
-# [ATOM for Alloy Discovery](https://bin-cao.github.io/AlloyDiscovery/)
+# [ATON for Alloy Discovery](https://bin-cao.github.io/AlloyDiscovery/)
 
 **Trajectory-based alloy property prediction with self-consistent inference and residual correction.**
 
