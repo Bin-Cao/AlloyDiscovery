@@ -4,6 +4,8 @@
 
 **Trajectory-based alloy property prediction with self-consistent inference and residual correction.**
 
+[English](README.md) | [中文](docs/README.zh-CN.md) | [日本語](docs/README.ja.md) | [한국어](docs/README.ko.md) | [Español](docs/README.es.md) | [Deutsch](docs/README.de.md)
+
 [![GitHub stars](https://img.shields.io/github/stars/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=1b3a4b)](https://github.com/Bin-Cao/AlloyDiscovery/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=4c72b0)](https://github.com/Bin-Cao/AlloyDiscovery/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=c44e52)](https://github.com/Bin-Cao/AlloyDiscovery/issues)
@@ -62,6 +64,7 @@ src/model.py              ATOM neural model
 src/ensemble.py           Internal residual correction branch
 src/train.py              Training and self-consistent prediction utilities
 docs/algorithm.html       Detailed English/Chinese algorithm document
+docs/README.md            Multilingual README switcher
 docs/figs/plot.ipynb      Five-fold comparison plots
 ```
 
@@ -148,3 +151,11 @@ Open the full bilingual algorithm guide:
 
 - [Online documentation](https://bin-cao.github.io/AlloyDiscovery/)
 - [`docs/algorithm.html`](docs/algorithm.html)
+
+Read this README in other languages:
+
+- [中文](docs/README.zh-CN.md)
+- [日本語](docs/README.ja.md)
+- [한국어](docs/README.ko.md)
+- [Español](docs/README.es.md)
+- [Deutsch](docs/README.de.md)
