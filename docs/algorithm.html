@@ -56,16 +56,18 @@
       color: var(--accent);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 16px;
     }
 
     .brand::before {
       content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--accent-2);
-      box-shadow: 16px 0 0 var(--accent-3), 8px 13px 0 var(--accent);
+      width: 26px;
+      height: 23px;
+      flex: 0 0 26px;
+      background:
+        radial-gradient(circle at 5px 5px, var(--accent-2) 0 5px, transparent 5.5px),
+        radial-gradient(circle at 21px 5px, var(--accent-3) 0 5px, transparent 5.5px),
+        radial-gradient(circle at 13px 18px, var(--accent) 0 5px, transparent 5.5px);
     }
 
     .toggle {
@@ -278,7 +280,7 @@
 <body>
   <header>
     <div class="bar">
-      <div class="brand">ATOM Alloy Discovery</div>
+      <div class="brand">ATOM for Alloy Discovery</div>
       <button class="toggle" id="langToggle" type="button">中文</button>
     </div>
   </header>

@@ -1,13 +1,56 @@
-# [ATOM](https://bin-cao.github.io/AlloyDiscovery/) for Alloy Prediction
+<div align="center">
 
-Alloy Trajectory Optimization Network/Model (ATON/ATOM) is a trajectory-based alloy property prediction model. It predicts:
+# [ATOM for Alloy Discovery](https://bin-cao.github.io/AlloyDiscovery/)
+
+**Trajectory-based alloy property prediction with self-consistent inference and residual correction.**
+
+[![GitHub stars](https://img.shields.io/github/stars/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=1b3a4b)](https://github.com/Bin-Cao/AlloyDiscovery/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=4c72b0)](https://github.com/Bin-Cao/AlloyDiscovery/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=c44e52)](https://github.com/Bin-Cao/AlloyDiscovery/issues)
+[![Documentation](https://img.shields.io/badge/docs-algorithm_guide-1b3a4b?style=flat)](https://bin-cao.github.io/AlloyDiscovery/)
+[![Python](https://img.shields.io/badge/python-3.x-3776ab?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+
+</div>
+
+Alloy Trajectory Optimization Network/Model (ATON/ATOM) predicts alloy mechanical properties from composition and processing descriptors:
 
 - `Strength_MPa`
 - `Plasticity_%`
 
-The model uses a neural ATOM backbone plus an internal residual correction branch. Users only see the final prediction columns.
+The model combines a neural ATOM backbone, self-consistent trajectory inference, and an internal residual correction branch. User-facing prediction files expose only the final ATOM prediction columns.
 
-## Main Files
+## Results Preview
+
+<p align="center">
+  <img src="docs/figs/tensile.png" alt="Strength prediction comparison" width="48%">
+  <img src="docs/figs/elongation.png" alt="Plasticity prediction comparison" width="48%">
+</p>
+
+The comparison notebook evaluates ATOM against RF, GBDT, SVR, Ridge, Lasso, ElasticNet, and KNN under the same five-fold out-of-fold protocol.
+
+## Quick Start
+
+```bash
+python trainer.py
+python inference.py input.xlsx predictions.xlsx --checkpoint checkpoints/model_best.pth
+```
+
+Generated training artifacts:
+
+```text
+checkpoints/model_best.pth
+checkpoints/cv_oof_predictions.xlsx
+checkpoints/cv_summary.json
+```
+
+Final inference columns:
+
+```text
+ATOM_Predicted_Strength_MPa
+ATOM_Predicted_Plasticity_%
+```
+
+## Repository Layout
 
 ```text
 data.xlsx                 Training data
@@ -36,20 +79,12 @@ Strength_MPa, Plasticity_%
 
 Inference data only needs feature columns. If label columns are present, `inference.py` drops them automatically.
 
-## Train
+## Training
 
 Run from the project root:
 
 ```bash
 python trainer.py
-```
-
-Outputs are generated automatically:
-
-```text
-checkpoints/model_best.pth
-checkpoints/cv_oof_predictions.xlsx
-checkpoints/cv_summary.json
 ```
 
 The cross-validation result is computed by concatenating all five held-out fold predictions, then evaluating once on the full out-of-fold prediction vector.
@@ -74,21 +109,14 @@ python trainer.py \
 python inference.py input.xlsx predictions.xlsx --checkpoint checkpoints/model_best.pth
 ```
 
-Final prediction columns:
-
-```text
-ATOM_Predicted_Strength_MPa
-ATOM_Predicted_Plasticity_%
-```
-
-## Build Search Space
+## Search Space
 
 ```bash
 python build_search_space.py --data data.xlsx --output search_space.csv
 python inference.py search_space.csv search_predictions.xlsx --checkpoint checkpoints/model_best.pth
 ```
 
-## Plot Model Comparison
+## Model Comparison Plots
 
 First train the model:
 
@@ -102,8 +130,6 @@ Then open and run:
 docs/figs/plot.ipynb
 ```
 
-The notebook compares ATOM with RF, GBDT, SVR, Ridge, Lasso, ElasticNet, and KNN using the same five-fold out-of-fold protocol.
-
 ## Use Your Own Data
 
 1. Prepare an Excel or CSV file with the required feature columns.
@@ -116,8 +142,9 @@ The notebook compares ATOM with RF, GBDT, SVR, Ridge, Lasso, ElasticNet, and KNN
 python trainer.py --data your_data.xlsx
 ```
 
-For detailed algorithm notes, open:
+## Documentation
 
-```text
-docs/algorithm.html
-```
+Open the full bilingual algorithm guide:
+
+- [Online documentation](https://bin-cao.github.io/AlloyDiscovery/)
+- [`docs/algorithm.html`](docs/algorithm.html)
