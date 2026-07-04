@@ -14,6 +14,12 @@
 
 </div>
 
+> [!IMPORTANT]
+> **ATON is a novel neural network architecture developed for alloy optimization. It groups process-related features according to their categories, enabling different types of information, such as composition, processing conditions, and testing parameters, to receive specialized representations. The model also incorporates optimization trajectories derived from human experts, allowing expert knowledge to guide the alloy optimization process.**  
+
+
+
+
 Alloy Trajectory Optimization Network/Model (ATON/ATOM) predicts alloy mechanical properties from composition and processing descriptors:
 
 - `Strength_MPa`
