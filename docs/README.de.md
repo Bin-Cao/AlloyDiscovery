@@ -8,6 +8,9 @@
 
 </div>
 
+> [!IMPORTANT]
+> **ATON ist eine neuartige neuronale Netzwerkarchitektur, die fuer die Legierungsoptimierung entwickelt wurde. Sie gruppiert prozessbezogene Merkmale nach ihren Kategorien, sodass verschiedene Arten von Informationen wie Zusammensetzung, Prozessbedingungen und Testparameter spezialisierte Repraesentationen erhalten. Das Modell integriert ausserdem Optimierungstrajektorien menschlicher Experten, damit Expertenwissen den Legierungsoptimierungsprozess leiten kann.**
+
 Alloy Trajectory Optimization Network/Model (ATON/ATOM) sagt mechanische Eigenschaften von Legierungen aus Zusammensetzungs- und Prozessdeskriptoren vorher:
 
 - `Strength_MPa`
@@ -18,8 +21,8 @@ Das Modell kombiniert ein neuronales ATOM-Backbone, selbstkonsistente Trajektori
 ## Ergebnisvorschau
 
 <p align="center">
-  <img src="figs/tensile.png" alt="Vergleich der Festigkeitsvorhersage" width="48%">
-  <img src="figs/elongation.png" alt="Vergleich der Plastizitätsvorhersage" width="48%">
+  <img src="figs/tensile.png" alt="Vergleich der Festigkeitsvorhersage" width="90%"><br>
+  <img src="figs/elongation.png" alt="Vergleich der Plastizitätsvorhersage" width="90%">
 </p>
 
 Das Vergleichsnotebook bewertet ATOM gegen RF, GBDT, SVR, Ridge, Lasso, ElasticNet und KNN mit demselben Fünf-Fold-Out-of-Fold-Protokoll.

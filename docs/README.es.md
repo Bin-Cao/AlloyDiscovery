@@ -8,6 +8,9 @@
 
 </div>
 
+> [!IMPORTANT]
+> **ATON es una arquitectura novedosa de red neuronal desarrollada para la optimización de aleaciones. Agrupa las características relacionadas con el procesamiento según sus categorías, lo que permite que distintos tipos de información, como la composición, las condiciones de procesamiento y los parámetros de ensayo, reciban representaciones especializadas. El modelo también incorpora trayectorias de optimización derivadas de expertos humanos, lo que permite que el conocimiento experto guíe el proceso de optimización de aleaciones.**
+
 Alloy Trajectory Optimization Network/Model (ATON/ATOM) predice propiedades mecánicas de aleaciones a partir de descriptores de composición y procesamiento:
 
 - `Strength_MPa`
@@ -18,8 +21,8 @@ El modelo combina una red neuronal ATOM, inferencia de trayectoria autoconsisten
 ## Vista previa de resultados
 
 <p align="center">
-  <img src="figs/tensile.png" alt="Comparación de predicción de resistencia" width="48%">
-  <img src="figs/elongation.png" alt="Comparación de predicción de plasticidad" width="48%">
+  <img src="figs/tensile.png" alt="Comparación de predicción de resistencia" width="90%"><br>
+  <img src="figs/elongation.png" alt="Comparación de predicción de plasticidad" width="90%">
 </p>
 
 El notebook de comparación evalúa ATOM frente a RF, GBDT, SVR, Ridge, Lasso, ElasticNet y KNN bajo el mismo protocolo out-of-fold de cinco particiones.

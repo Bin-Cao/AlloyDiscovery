@@ -8,6 +8,9 @@
 
 </div>
 
+> [!IMPORTANT]
+> **ATON은 합금 최적화를 위해 개발된 새로운 신경망 아키텍처입니다. 공정 관련 특징을 범주에 따라 그룹화하여 조성, 공정 조건, 시험 매개변수와 같은 서로 다른 유형의 정보가 특화된 표현을 얻도록 합니다. 또한 이 모델은 인간 전문가로부터 도출된 최적화 궤적을 통합하여 전문가 지식이 합금 최적화 과정을 안내할 수 있게 합니다.**
+
 Alloy Trajectory Optimization Network/Model (ATON/ATOM)은 조성 및 공정 설명자로부터 합금의 기계적 물성을 예측합니다.
 
 - `Strength_MPa`
@@ -18,8 +21,8 @@ Alloy Trajectory Optimization Network/Model (ATON/ATOM)은 조성 및 공정 설
 ## 결과 미리보기
 
 <p align="center">
-  <img src="figs/tensile.png" alt="강도 예측 비교" width="48%">
-  <img src="figs/elongation.png" alt="소성 예측 비교" width="48%">
+  <img src="figs/tensile.png" alt="강도 예측 비교" width="90%"><br>
+  <img src="figs/elongation.png" alt="소성 예측 비교" width="90%">
 </p>
 
 비교 notebook은 동일한 5-fold out-of-fold 프로토콜에서 ATOM을 RF, GBDT, SVR, Ridge, Lasso, ElasticNet, KNN과 비교합니다.

@@ -8,6 +8,9 @@
 
 </div>
 
+> [!IMPORTANT]
+> **ATON 是一种用于合金优化的新型神经网络架构。它根据工艺相关特征的类别对其进行分组，使成分、加工条件和测试参数等不同类型的信息能够获得专门的表征。该模型还融入了来自人类专家的优化轨迹，使专家知识能够引导合金优化过程。**
+
 Alloy Trajectory Optimization Network/Model (ATON/ATOM) 根据成分和工艺描述符预测合金力学性能：
 
 - `Strength_MPa`
@@ -18,8 +21,8 @@ Alloy Trajectory Optimization Network/Model (ATON/ATOM) 根据成分和工艺描
 ## 结果预览
 
 <p align="center">
-  <img src="figs/tensile.png" alt="强度预测对比" width="48%">
-  <img src="figs/elongation.png" alt="塑性预测对比" width="48%">
+  <img src="figs/tensile.png" alt="强度预测对比" width="90%"><br>
+  <img src="figs/elongation.png" alt="塑性预测对比" width="90%">
 </p>
 
 对比 notebook 在相同五折 out-of-fold 流程下评估 ATOM 与 RF、GBDT、SVR、Ridge、Lasso、ElasticNet 和 KNN。
