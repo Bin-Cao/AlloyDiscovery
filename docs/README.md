@@ -1,5 +1,7 @@
 # ATON for Alloy Discovery Documentation
 
+[![Article](https://img.shields.io/badge/article-expert--trajectory--guided_processing-8b5cf6?style=flat&logo=readthedocs&logoColor=white)](https://doi.org/10.21203/rs.3.rs-10164164/v1 "High-strength and ductile high-entropy alloy via expert-trajectory-guided processing")
+
 > [!IMPORTANT]
 > **ATON is a novel neural network architecture developed for alloy optimization. It groups process-related features according to their categories, enabling different types of information, such as composition, processing conditions, and testing parameters, to receive specialized representations. The model also incorporates optimization trajectories derived from human experts, allowing expert knowledge to guide the alloy optimization process.**
 

@@ -6,6 +6,8 @@
 
 [English](../README.md) | [中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
+[![Article](https://img.shields.io/badge/article-expert--trajectory--guided_processing-8b5cf6?style=flat&logo=readthedocs&logoColor=white)](https://doi.org/10.21203/rs.3.rs-10164164/v1 "High-strength and ductile high-entropy alloy via expert-trajectory-guided processing")
+
 </div>
 
 > [!IMPORTANT]

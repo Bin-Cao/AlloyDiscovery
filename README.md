@@ -10,6 +10,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=4c72b0)](https://github.com/Bin-Cao/AlloyDiscovery/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/Bin-Cao/AlloyDiscovery?style=flat&logo=github&color=c44e52)](https://github.com/Bin-Cao/AlloyDiscovery/issues)
 [![Documentation](https://img.shields.io/badge/docs-algorithm_guide-1b3a4b?style=flat)](https://bin-cao.github.io/AlloyDiscovery/)
+[![Article](https://img.shields.io/badge/article-expert--trajectory--guided_processing-8b5cf6?style=flat&logo=readthedocs&logoColor=white)](https://doi.org/10.21203/rs.3.rs-10164164/v1 "High-strength and ductile high-entropy alloy via expert-trajectory-guided processing")
 [![Python](https://img.shields.io/badge/python-3.x-3776ab?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 
 </div>
